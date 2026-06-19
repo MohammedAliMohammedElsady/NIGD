@@ -1,0 +1,26 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<WebApplicationReport.Models.Domain.ApplicationUser> SignInManager
+@inject UserManager<WebApplicationReport.Models.Domain.ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <span class="nav-username nav-link">👤 @UserManager.GetUserName(User)</span>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout"
+              asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-danger border-0 p-0 px-2">
+                🚪 @(System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? "خروج" : "Logout")
+            </button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+            @(System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? "تسجيل الدخول" : "Login")
+        </a>
+    </li>
+}

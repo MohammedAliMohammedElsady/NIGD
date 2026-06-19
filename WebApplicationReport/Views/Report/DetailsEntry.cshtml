@@ -1,0 +1,262 @@
+@model WebApplicationReport.Models.Domain.Report
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<style>
+    .details-header {
+        background: linear-gradient(135deg, #1a3c6e 0%, #2563eb 100%);
+        border-radius: 16px;
+        padding: 24px 32px;
+        margin-bottom: 24px;
+        color: white;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        box-shadow: 0 4px 20px rgba(26,60,110,0.15);
+    }
+
+    .details-header h3 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .details-header .sub { font-size: 0.83rem; opacity: .75; margin-top: 4px; }
+
+    .details-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+    .dh-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all .2s;
+    }
+
+    .dh-btn-add   { background: #d1fae5; color: #065f46; }
+    .dh-btn-add:hover { background: #a7f3d0; color: #065f46; }
+    .dh-btn-pdf   { background: #fee2e2; color: #dc2626; }
+    .dh-btn-pdf:hover { background: #fecaca; color: #b91c1c; }
+    .dh-btn-excel { background: #dcfce7; color: #15803d; }
+    .dh-btn-excel:hover { background: #bbf7d0; color: #166534; }
+    .dh-btn-back  { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+    .dh-btn-back:hover { background: rgba(255,255,255,0.25); color: white; }
+
+    .viewer-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+        overflow: hidden;
+        margin-bottom: 24px;
+    }
+
+    .viewer-card-header {
+        background: #f8faff;
+        border-bottom: 1px solid #e8ecf5;
+        padding: 14px 20px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #1a3c6e;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .entries-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+        overflow: hidden;
+    }
+
+    .entries-card-header {
+        background: #f8faff;
+        border-bottom: 1px solid #e8ecf5;
+        padding: 14px 20px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #1a3c6e;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .entry-count {
+        background: #eff6ff;
+        color: #2563eb;
+        border-radius: 20px;
+        padding: 2px 12px;
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    .entries-table { width: 100%; border-collapse: collapse; }
+
+    .entries-table thead tr {
+        background: #1a3c6e;
+        color: white;
+    }
+
+    .entries-table thead th {
+        padding: 11px 14px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-align: start;
+        white-space: nowrap;
+    }
+
+    .entries-table tbody tr {
+        border-bottom: 1px solid #f1f4fb;
+        transition: background .12s;
+    }
+
+    .entries-table tbody tr:last-child { border-bottom: none; }
+    .entries-table tbody tr:hover { background: #f8faff; }
+
+    .entries-table tbody td {
+        padding: 11px 14px;
+        font-size: 0.85rem;
+        color: #374151;
+    }
+
+    .row-num { color: #9ca3af; font-size: 0.78rem; font-weight: 600; }
+
+    .action-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background .15s;
+    }
+
+    .am-edit  { background: #eff6ff; color: #2563eb; }
+    .am-edit:hover { background: #dbeafe; }
+    .am-del   { background: #fee2e2; color: #dc2626; }
+    .am-del:hover { background: #fecaca; }
+
+    .empty-entries {
+        padding: 40px;
+        text-align: center;
+        color: #9ca3af;
+        font-size: 0.88rem;
+    }
+</style>
+
+<div style="max-width:1200px; margin:0 auto;">
+
+    <div class="details-header">
+        <div>
+            <h3>@Model.Name</h3>
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <div class="sub">@Model.Description</div>
+            }
+        </div>
+        <div class="details-actions">
+            @if (User.IsInRole("Admin") || User.IsInRole("DataEntry"))
+            {
+                <a asp-action="AddEntry" asp-route-id="@Model.Id" class="dh-btn dh-btn-add">
+                    ＋ @ViewLocalizer["Add Entry"]
+                </a>
+            }
+            @if (!User.IsInRole("Editor"))
+            {
+                <a asp-action="Preview" asp-route-id="@Model.Id" class="dh-btn dh-btn-pdf" target="_blank">
+                    📄 @ViewLocalizer["PDF"]
+                </a>
+                <a asp-action="ExportExcel" asp-route-id="@Model.Id" class="dh-btn dh-btn-excel">
+                    📊 @ViewLocalizer["Export Excel"]
+                </a>
+            }
+            <a asp-action="Index" class="dh-btn dh-btn-back">← @ViewLocalizer["Back"]</a>
+        </div>
+    </div>
+
+    @if (!User.IsInRole("Editor"))
+    {
+        <div class="viewer-card">
+            <div class="viewer-card-header">
+                📄 @ViewLocalizer["Report Viewer"]
+            </div>
+            <iframe src="@Url.Action("Preview", new { id = Model.Id })"
+                    width="100%" height="520px" style="border:none; display:block;"></iframe>
+        </div>
+    }
+
+    <div class="entries-card">
+        <div class="entries-card-header">
+            <span>📝 @ViewLocalizer["Entries"]</span>
+            <span class="entry-count">@Model.Entries.Count</span>
+        </div>
+
+        @if (!Model.Entries.Any())
+        {
+            <div class="empty-entries">📭 @ViewLocalizer["No entries yet."]</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="entries-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            @foreach (var field in Model.Fields)
+                            {
+                                <th>@field.Label</th>
+                            }
+                            <th>@ViewLocalizer["Submitted By"]</th>
+                            <th>@ViewLocalizer["Date"]</th>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                            {
+                                <th>@ViewLocalizer["Actions"]</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int row = 1; }
+                        @foreach (var entry in Model.Entries.OrderByDescending(e => e.SubmittedAt))
+                        {
+                            <tr>
+                                <td><span class="row-num">@row</span></td>
+                                @foreach (var field in Model.Fields)
+                                {
+                                    var val = entry.Values.FirstOrDefault(v => v.ReportFieldId == field.Id)?.Value ?? "—";
+                                    <td>@val</td>
+                                }
+                                <td>@entry.SubmittedByEmail</td>
+                                <td style="white-space:nowrap">@entry.SubmittedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                                {
+                                    <td>
+                                        <div style="display:flex;gap:6px;">
+                                            <a asp-action="EditEntry" asp-route-id="@entry.Id"
+                                               class="action-mini am-edit">✏️ @ViewLocalizer["Edit"]</a>
+                                            <form asp-action="DeleteEntry" asp-route-id="@entry.Id"
+                                                  method="post" class="d-inline"
+                                                  onsubmit="return confirm('Delete this entry?')">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="action-mini am-del">🗑 @ViewLocalizer["Delete"]</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                            row++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,189 @@
+@model WebApplicationReport.Models.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = ViewLocalizer["Edit User"];
+    var initials = Model.Email?.Length > 0 ? Model.Email[0].ToString().ToUpper() : "?";
+}
+
+<style>
+    .form-page-wrap {
+        max-width: 560px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #1a3c6e 0%, #2563eb 100%);
+        border-radius: 16px 16px 0 0;
+        padding: 24px 32px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .form-header-avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        border: 2px solid rgba(255,255,255,0.4);
+        font-size: 1.3rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .form-header h2 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .form-header .sub { font-size: 0.83rem; opacity: .7; margin-top: 2px; word-break: break-all; }
+
+    .form-card {
+        background: #fff;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+        padding: 32px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    .form-control, .form-select {
+        border: 1.5px solid #e5e7eb;
+        border-radius: 9px;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        color: #111827;
+        transition: border-color .2s, box-shadow .2s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        outline: none;
+    }
+
+    .field-hint {
+        font-size: 0.78rem;
+        color: #9ca3af;
+        margin-top: 4px;
+    }
+
+    .field-divider {
+        border: none;
+        border-top: 1px solid #f1f4fb;
+        margin: 20px 0;
+    }
+
+    .section-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 14px;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #1a3c6e, #2563eb);
+        color: white;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 28px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: opacity .2s, transform .2s;
+    }
+
+    .btn-save:hover { opacity: .9; transform: translateY(-1px); color: white; }
+
+    .btn-cancel {
+        background: #f3f4f6;
+        color: #6b7280;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 24px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: background .2s;
+    }
+
+    .btn-cancel:hover { background: #e5e7eb; color: #374151; }
+
+    .password-section {
+        background: #fafbff;
+        border: 1px dashed #c7d2fe;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="form-page-wrap mt-4">
+    <div class="form-header">
+        <div class="form-header-avatar">@initials</div>
+        <div>
+            <h2>✏️ @ViewLocalizer["Edit User"]</h2>
+            <div class="sub">@Model.Email</div>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="EditUser" method="post">
+            <input type="hidden" asp-for="UserId" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 mb-3" style="font-size:.88rem;"></div>
+
+            <div class="section-label">Account Info</div>
+
+            <div class="mb-3">
+                <label class="form-label">📧 @ViewLocalizer["Email"]</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger" style="font-size:.8rem;"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🎭 @ViewLocalizer["Role"]</label>
+                <select asp-for="Role" class="form-select">
+                    <option value="">-- @ViewLocalizer["No Role"] --</option>
+                    @foreach (var role in Model.AllRoles)
+                    {
+                        <option value="@role" selected="@(Model.Role == role ? "selected" : null)">@role</option>
+                    }
+                </select>
+            </div>
+
+            <hr class="field-divider" />
+
+            <div class="section-label">Change Password</div>
+
+            <div class="password-section">
+                <div class="mb-3">
+                    <label class="form-label">🔒 @ViewLocalizer["New Password"]</label>
+                    <input asp-for="NewPassword" class="form-control" type="password" />
+                    <div class="field-hint">@ViewLocalizer["Leave blank to keep current"]</div>
+                    <span asp-validation-for="NewPassword" class="text-danger" style="font-size:.8rem;"></span>
+                </div>
+
+                <div class="mb-1">
+                    <label class="form-label">🔒 @ViewLocalizer["Confirm Password"]</label>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger" style="font-size:.8rem;"></span>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 align-items-center">
+                <button type="submit" class="btn-save">✓ @ViewLocalizer["Save"]</button>
+                <a asp-action="Users" class="btn-cancel">✕ @ViewLocalizer["Cancel"]</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

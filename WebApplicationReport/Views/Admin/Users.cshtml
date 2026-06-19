@@ -1,0 +1,314 @@
+@model List<WebApplicationReport.Models.ViewModels.UserRoleViewModel>
+@{
+    ViewData["Title"] = ViewLocalizer["Users Management"];
+}
+
+<style>
+    .users-header {
+        background: linear-gradient(135deg, #1a3c6e 0%, #2563eb 100%);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        box-shadow: 0 4px 20px rgba(26,60,110,0.18);
+    }
+
+    .users-header h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+
+    .users-header .subtitle {
+        font-size: 0.85rem;
+        opacity: 0.75;
+        margin-top: 4px;
+    }
+
+    .btn-add-user {
+        background: white;
+        color: #1a3c6e;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all .2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .btn-add-user:hover {
+        background: #f0f4ff;
+        color: #1a3c6e;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .users-table-wrap {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+        overflow: hidden;
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .users-table thead tr {
+        background: #f8faff;
+        border-bottom: 2px solid #e5e9f5;
+    }
+
+    .users-table thead th {
+        padding: 14px 20px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    .users-table tbody tr {
+        border-bottom: 1px solid #f1f4fb;
+        transition: background .15s;
+    }
+
+    .users-table tbody tr:last-child { border-bottom: none; }
+
+    .users-table tbody tr:hover { background: #f8faff; }
+
+    .users-table td {
+        padding: 16px 20px;
+        vertical-align: middle;
+        font-size: 0.9rem;
+        color: #374151;
+    }
+
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1a3c6e, #2563eb);
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .user-email { font-weight: 500; color: #111827; }
+
+    .role-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin: 2px;
+    }
+
+    .role-Admin    { background: #fef3c7; color: #92400e; }
+    .role-Editor   { background: #d1fae5; color: #065f46; }
+    .role-DataEntry { background: #dbeafe; color: #1e40af; }
+    .role-default  { background: #f3f4f6; color: #6b7280; }
+
+    .no-role {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        font-style: italic;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all .2s;
+    }
+
+    .btn-edit   { background: #eff6ff; color: #2563eb; }
+    .btn-edit:hover { background: #dbeafe; color: #1d4ed8; }
+
+    .btn-role   { background: #fefce8; color: #a16207; }
+    .btn-role:hover { background: #fef9c3; color: #854d0e; }
+
+    .users-count {
+        font-size: 0.82rem;
+        color: rgba(255,255,255,0.7);
+        margin-top: 2px;
+    }
+
+    .search-bar {
+        padding: 12px 20px;
+        border-bottom: 1px solid #f1f4fb;
+        background: #fafbff;
+    }
+
+    .search-input {
+        width: 100%;
+        max-width: 320px;
+        padding: 8px 14px 8px 36px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        color: #374151;
+        background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.868-3.834zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 10px center;
+        outline: none;
+        transition: border-color .2s;
+    }
+
+    .search-input:focus { border-color: #2563eb; }
+
+    .row-num {
+        font-size: 0.78rem;
+        color: #9ca3af;
+        font-weight: 600;
+    }
+
+    .deleted-row { background: #fef2f2 !important; opacity: .75; }
+    .deleted-row:hover { background: #fee2e2 !important; }
+
+    .deleted-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #fee2e2;
+        color: #dc2626;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        margin-inline-start: 6px;
+        vertical-align: middle;
+    }
+
+    .btn-delete { background: #fee2e2; color: #dc2626; }
+    .btn-delete:hover { background: #fecaca; color: #b91c1c; }
+    .btn-restore { background: #d1fae5; color: #065f46; }
+    .btn-restore:hover { background: #a7f3d0; color: #064e3b; }
+</style>
+
+<div class="container-fluid" style="max-width:1100px; margin:0 auto;">
+
+    <div class="users-header">
+        <div>
+            <h2>👥 @ViewLocalizer["Users Management"]</h2>
+            <div class="users-count">@Model.Count @ViewLocalizer["users in the system"]</div>
+        </div>
+        <a asp-action="AddUser" class="btn-add-user">
+            <span style="font-size:1.1rem">＋</span> @ViewLocalizer["Add User"]
+        </a>
+    </div>
+
+    <div class="users-table-wrap">
+        <div class="search-bar">
+            <input class="search-input" type="text" id="searchInput"
+                   placeholder="@ViewLocalizer["Search users..."]" />
+        </div>
+
+        <table class="users-table" id="usersTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@ViewLocalizer["User"]</th>
+                    <th>@ViewLocalizer["Roles"]</th>
+                    <th>@ViewLocalizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var u = Model[i];
+                    var initials = u.Email.Length > 0 ? u.Email[0].ToString().ToUpper() : "?";
+                    <tr class="@(u.IsDeleted ? "deleted-row" : "")">
+                        <td><span class="row-num">@(i + 1)</span></td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar" style="@(u.IsDeleted ? "background:#ef4444;" : "")">@initials</div>
+                                <div>
+                                    <span class="user-email">@u.Email</span>
+                                    @if (u.IsDeleted)
+                                    {
+                                        <span class="deleted-badge">🚫 Deleted</span>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @if (u.Roles.Count > 0)
+                            {
+                                foreach (var role in u.Roles)
+                                {
+                                    <span class="role-badge role-@role">@role</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="no-role">@ViewLocalizer["No Role"]</span>
+                            }
+                        </td>
+                        <td>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                @if (!u.IsDeleted)
+                                {
+                                    <a asp-action="EditUser" asp-route-userId="@u.UserId"
+                                       class="action-btn btn-edit">
+                                        ✏️ @ViewLocalizer["Edit"]
+                                    </a>
+                                    <a asp-action="AssignRole" asp-route-userId="@u.UserId"
+                                       class="action-btn btn-role">
+                                        🔑 @ViewLocalizer["Assign Role"]
+                                    </a>
+                                    <form asp-action="DeleteUser" asp-route-userId="@u.UserId"
+                                          method="post" class="d-inline"
+                                          onsubmit="return confirm('Soft-delete this user? They will no longer be able to log in.')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="action-btn btn-delete">🗑 Delete</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="RestoreUser" asp-route-userId="@u.UserId"
+                                          method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="action-btn btn-restore">♻️ Restore</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('#usersTable tbody tr').forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+</script>

@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .home-hero {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(160deg, #f0f4ff 0%, #ffffff 60%, #fdf6e3 100%);
+    }
+
+    .home-logo {
+        width: 220px;
+        height: auto;
+        margin-bottom: 28px;
+        filter: drop-shadow(0 4px 16px rgba(0,0,0,0.10));
+    }
+
+    .home-title-ar {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #8B6914;
+        font-family: 'Tahoma', sans-serif;
+        line-height: 1.5;
+        margin-bottom: 6px;
+    }
+
+    .home-title-en {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: #555;
+        font-family: 'Segoe UI', sans-serif;
+        margin-bottom: 36px;
+        letter-spacing: 0.3px;
+    }
+
+    .home-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #8B6914, #1a3c6e);
+        border-radius: 2px;
+        margin: 0 auto 36px;
+    }
+
+    .home-cards {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 800px;
+    }
+
+    .home-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 28px 32px;
+        width: 200px;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        transition: transform .2s, box-shadow .2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .home-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 28px rgba(26,60,110,0.13);
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .home-card .icon {
+        font-size: 2.2rem;
+    }
+
+    .home-card .label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a3c6e;
+    }
+
+    .home-card .label-ar {
+        font-size: 0.85rem;
+        color: #888;
+        font-family: 'Tahoma', sans-serif;
+    }
+</style>
+
+<div class="home-hero">
+
+    <img src="~/images/logo.png" alt="Institute Logo" class="home-logo"
+         onerror="this.style.display='none'" />
+
+    <div class="home-title-ar">المعهد القومي للحوكمة والتنمية المستدامة</div>
+    <div class="home-title-en">National Institute for Governance &amp; Sustainable Development</div>
+
+    <div class="home-divider"></div>
+
+    <div class="home-cards">
+        <a asp-controller="Report" asp-action="Index" class="home-card">
+            <span class="icon">📊</span>
+            <span class="label">Reports</span>
+            <span class="label-ar">التقارير</span>
+        </a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Admin" asp-action="Users" class="home-card">
+                <span class="icon">👥</span>
+                <span class="label">Users</span>
+                <span class="label-ar">المستخدمون</span>
+            </a>
+        }
+    </div>
+
+</div>

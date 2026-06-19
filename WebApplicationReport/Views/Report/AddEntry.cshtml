@@ -1,0 +1,161 @@
+@model WebApplicationReport.Models.ViewModels.ReportEntryViewModel
+@using WebApplicationReport.Models.Domain
+@{
+    ViewData["Title"] = "Add Entry";
+}
+
+<style>
+    .entry-wrap { max-width: 700px; margin: 0 auto; }
+
+    .entry-header {
+        background: linear-gradient(135deg, #1a3c6e 0%, #2563eb 100%);
+        border-radius: 16px 16px 0 0;
+        padding: 22px 32px;
+        color: white;
+    }
+
+    .entry-header h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+    .entry-header .report-name {
+        display: inline-block;
+        background: rgba(255,255,255,0.18);
+        border-radius: 6px;
+        padding: 2px 10px;
+        font-size: 0.85rem;
+        margin-top: 6px;
+    }
+
+    .entry-body {
+        background: #fff;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+        padding: 32px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #374151;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .form-control, .form-select {
+        border: 1.5px solid #e5e7eb;
+        border-radius: 9px;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        transition: border-color .2s, box-shadow .2s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        outline: none;
+    }
+
+    .field-block {
+        background: #fafbff;
+        border: 1px solid #e8ecf5;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
+        transition: border-color .2s;
+    }
+
+    .field-block:hover { border-color: #c7d2fe; }
+
+    .required-star { color: #dc2626; font-size: 0.8rem; }
+
+    .btn-save {
+        background: linear-gradient(135deg, #1a3c6e, #2563eb);
+        color: white;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 28px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: opacity .2s;
+    }
+
+    .btn-save:hover { opacity: .9; color: white; }
+
+    .btn-cancel {
+        background: #f3f4f6;
+        color: #6b7280;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 24px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .btn-cancel:hover { background: #e5e7eb; color: #374151; }
+</style>
+
+<div class="entry-wrap mt-4">
+    <div class="entry-header">
+        <h3>➕ @ViewLocalizer["Add Entry"]</h3>
+        <div class="report-name">📊 @Model.ReportName</div>
+    </div>
+
+    <div class="entry-body">
+        <form asp-action="AddEntry" asp-route-id="@Model.ReportId" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="ReportId" />
+            <input type="hidden" asp-for="ReportName" />
+
+            @for (int i = 0; i < Model.Fields.Count; i++)
+            {
+                var field = Model.Fields[i];
+                <input type="hidden" name="Fields[@i].FieldId" value="@field.FieldId" />
+                <input type="hidden" name="Fields[@i].Label" value="@field.Label" />
+                <input type="hidden" name="Fields[@i].FieldType" value="@((int)field.FieldType)" />
+                <input type="hidden" name="Fields[@i].IsRequired" value="@field.IsRequired.ToString().ToLower()" />
+
+                <div class="field-block">
+                    <label class="form-label">
+                        @field.Label
+                        @if (field.IsRequired) { <span class="required-star">*</span> }
+                    </label>
+
+                    @if (field.FieldType == FieldType.Text)
+                    {
+                        <input type="text" name="Fields[@i].Value" class="form-control"
+                               value="@field.Value" @(field.IsRequired ? "required" : "") />
+                    }
+                    else if (field.FieldType == FieldType.Number)
+                    {
+                        <input type="number" name="Fields[@i].Value" class="form-control"
+                               value="@field.Value" @(field.IsRequired ? "required" : "") />
+                    }
+                    else if (field.FieldType == FieldType.Date)
+                    {
+                        <input type="date" name="Fields[@i].Value" class="form-control"
+                               value="@field.Value" @(field.IsRequired ? "required" : "") />
+                    }
+                    else if (field.FieldType == FieldType.Dropdown)
+                    {
+                        <select name="Fields[@i].Value" class="form-select" @(field.IsRequired ? "required" : "")>
+                            <option value="">-- Select --</option>
+                            @foreach (var opt in field.Options)
+                            {
+                                <option value="@opt" selected="@(field.Value == opt)">@opt</option>
+                            }
+                        </select>
+                    }
+                </div>
+            }
+
+            <div class="d-flex gap-3 align-items-center mt-2">
+                <button type="submit" class="btn-save">✓ @ViewLocalizer["Save"]</button>
+                <a asp-action="DetailsEntry" asp-route-id="@Model.ReportId" class="btn-cancel">
+                    ✕ @ViewLocalizer["Cancel"]
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

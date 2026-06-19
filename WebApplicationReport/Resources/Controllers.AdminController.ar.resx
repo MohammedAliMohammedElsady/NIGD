@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true" />
+  </xsd:schema>
+  <data name="Users Management" xml:space="preserve">
+    <value>إدارة المستخدمين</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>الإجراءات</value>
+  </data>
+  <data name="No Role" xml:space="preserve">
+    <value>بدون دور</value>
+  </data>
+  <data name="Assign Role" xml:space="preserve">
+    <value>تعيين دور</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="Add User" xml:space="preserve">
+    <value>إضافة مستخدم</value>
+  </data>
+  <data name="Edit User" xml:space="preserve">
+    <value>تعديل مستخدم</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
+  </data>
+  <data name="Leave blank to keep current" xml:space="preserve">
+    <value>اتركها فارغة للإبقاء على الحالية</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>الدور</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>المستخدم</value>
+  </data>
+  <data name="users in the system" xml:space="preserve">
+    <value>مستخدم في النظام</value>
+  </data>
+  <data name="Search users..." xml:space="preserve">
+    <value>بحث عن مستخدم...</value>
+  </data>
+</root>

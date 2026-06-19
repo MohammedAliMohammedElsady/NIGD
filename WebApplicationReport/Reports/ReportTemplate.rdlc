@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition"
+        xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+
+  <ReportParameters>
+    <ReportParameter Name="ReportTitle">
+      <DataType>String</DataType>
+      <DefaultValue><Values><Value>Report</Value></Values></DefaultValue>
+      <Prompt>Report Title</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportDescription">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <DefaultValue><Values><Value></Value></Values></DefaultValue>
+      <Prompt>Description</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PrintDate">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <DefaultValue><Values><Value></Value></Values></DefaultValue>
+      <Prompt>Print Date</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+
+  <DataSources>
+    <DataSource Name="DS">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-1111-2222-3333-a1b2c3d4e5f6</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+
+  <DataSets>
+    <DataSet Name="ReportData">
+      <Query>
+        <DataSourceName>DS</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Col1">  <DataField>Col1</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col2">  <DataField>Col2</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col3">  <DataField>Col3</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col4">  <DataField>Col4</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col5">  <DataField>Col5</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col6">  <DataField>Col6</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col7">  <DataField>Col7</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col8">  <DataField>Col8</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col9">  <DataField>Col9</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="Col10"> <DataField>Col10</DataField> <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H1">  <DataField>H1</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H2">  <DataField>H2</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H3">  <DataField>H3</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H4">  <DataField>H4</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H5">  <DataField>H5</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H6">  <DataField>H6</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H7">  <DataField>H7</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H8">  <DataField>H8</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H9">  <DataField>H9</DataField>  <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="H10"> <DataField>H10</DataField> <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="SubmittedBy"> <DataField>SubmittedBy</DataField> <rd:TypeName>System.String</rd:TypeName></Field>
+        <Field Name="SubmittedAt"> <DataField>SubmittedAt</DataField> <rd:TypeName>System.String</rd:TypeName></Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+
+  <Body>
+    <ReportItems>
+
+      <!-- Institute Name -->
+      <Textbox Name="InstituteName">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>المعهد القومي للحوكمة والتنمية المستدامة</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>13pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>#8B6914</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0cm</Top>
+        <Left>0cm</Left>
+        <Width>17cm</Width>
+        <Height>0.8cm</Height>
+        <Style><Border><Style>None</Style></Border></Style>
+      </Textbox>
+
+      <!-- Report Title -->
+      <Textbox Name="TitleBox">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!ReportTitle.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>14pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>#1a3c6e</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0.9cm</Top>
+        <Left>0cm</Left>
+        <Width>17cm</Width>
+        <Height>0.8cm</Height>
+        <Style><Border><Style>None</Style></Border></Style>
+      </Textbox>
+
+      <!-- Description -->
+      <Textbox Name="DescriptionBox">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!ReportDescription.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <Color>#555555</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Center</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>1.8cm</Top>
+        <Left>0cm</Left>
+        <Width>12cm</Width>
+        <Height>0.5cm</Height>
+        <Style><Border><Style>None</Style></Border></Style>
+      </Textbox>
+
+      <!-- Print Date -->
+      <Textbox Name="PrintDateBox">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!PrintDate.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <Color>#888888</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style><TextAlign>Right</TextAlign></Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>1.8cm</Top>
+        <Left>12cm</Left>
+        <Width>5cm</Width>
+        <Height>0.5cm</Height>
+        <Style><Border><Style>None</Style></Border></Style>
+      </Textbox>
+
+      <!-- Data Table -->
+      <Tablix Name="DataTable">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+            <TablixColumn><Width>1.7cm</Width></TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+
+            <!-- Header Row -->
+            <TablixRow>
+              <Height>0.7cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="TH1"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H1.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH2"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H2.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH3"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H3.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH4"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H4.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH5"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H5.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH6"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H6.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH7"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H7.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH8"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H8.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH9"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H9.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TH10"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!H10.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><FontWeight>Bold</FontWeight><Color>White</Color></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><BackgroundColor>#1a3c6e</BackgroundColor><Border><Style>Solid</Style><Color>White</Color></Border><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+
+            <!-- Data Row -->
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell><CellContents><Textbox Name="TD1"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col1.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD2"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col2.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD3"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col3.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD4"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col4.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD5"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col5.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD6"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col6.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD7"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col7.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD8"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col8.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD9"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col9.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+                <TablixCell><CellContents><Textbox Name="TD10"><CanGrow>true</CanGrow><Paragraphs><Paragraph><TextRuns><TextRun><Value>=Fields!Col10.Value</Value><Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize></Style></TextRun></TextRuns><Style><TextAlign>Center</TextAlign></Style></Paragraph></Paragraphs><Style><Border><Style>Solid</Style><Color>#cccccc</Color></Border><BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0,"#EEF2FF","White")</BackgroundColor><VerticalAlign>Middle</VerticalAlign></Style></Textbox></CellContents></TablixCell>
+              </TablixCells>
+            </TablixRow>
+
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember/><TablixMember/><TablixMember/><TablixMember/><TablixMember/>
+            <TablixMember/><TablixMember/><TablixMember/><TablixMember/><TablixMember/>
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Details"/>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>ReportData</DataSetName>
+        <Top>2.5cm</Top>
+        <Left>0cm</Left>
+        <Width>17cm</Width>
+        <Style>
+          <Border><Style>Solid</Style><Color>#1a3c6e</Color><Width>1pt</Width></Border>
+        </Style>
+      </Tablix>
+
+    </ReportItems>
+    <Height>20cm</Height>
+    <Style/>
+  </Body>
+
+  <Page>
+    <PageFooter>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="PageNumber">
+          <CanGrow>true</CanGrow>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!PageNumber &amp; " / " &amp; Globals!TotalPages</Value>
+                  <Style><FontFamily>Tahoma</FontFamily><FontSize>8pt</FontSize><Color>#888888</Color></Style>
+                </TextRun>
+              </TextRuns>
+              <Style><TextAlign>Center</TextAlign></Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1cm</Top>
+          <Left>0cm</Left>
+          <Width>17cm</Width>
+          <Height>0.5cm</Height>
+          <Style><Border><Style>None</Style></Border></Style>
+        </Textbox>
+      </ReportItems>
+      <Height>0.7cm</Height>
+      <Style/>
+    </PageFooter>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
+    <Style/>
+  </Page>
+
+  <Width>17cm</Width>
+  <Language>ar-EG</Language>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+</Report>
